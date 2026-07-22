@@ -3,9 +3,15 @@ import type { Project } from "@/types/project";
 
 type ProjectCardProps = {
   project: Project;
+  onLike: (projectId: string) => void;
+  isLiking: boolean;
 };
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  onLike,
+  isLiking,
+}: ProjectCardProps) {
   return (
     <article className="flex min-h-72 flex-col rounded-2xl border border-slate-300 bg-white/85 px-6 py-8 text-center shadow-lg backdrop-blur transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900">
       <h2 className="mb-4 text-xl font-bold text-slate-900 dark:text-white">
@@ -26,6 +32,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </li>
         ))}
       </ul>
+
+      <button
+        type="button"
+        onClick={() => onLike(project.id)}
+        disabled={isLiking}
+        className="mx-auto mt-6 rounded-lg bg-rose-100 px-4 py-2 font-semibold text-rose-700 transition hover:bg-rose-200 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-rose-950 dark:text-rose-300"
+      >
+        ❤️ {project.likes}
+        {isLiking && " Adding..."}
+      </button>
 
       <Link
         href={`/projects/${project.id}`}
