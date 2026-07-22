@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
+import Providers from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,17 +36,19 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="min-h-screen">
-        <ThemeProvider>
-          <div className="flex min-h-screen flex-col bg-gradient-to-br from-slate-200 via-slate-100 to-blue-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100">
-            <Header />
+        <Providers>
+          <ThemeProvider>
+            <div className="flex min-h-screen flex-col bg-gradient-to-br from-slate-200 via-slate-100 to-blue-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100">
+              <Header />
 
-            <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
-              {children}
-            </main>
+              <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
+                {children}
+              </main>
 
-            <Footer />
-          </div>
-        </ThemeProvider>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

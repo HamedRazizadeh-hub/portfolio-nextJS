@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
-import ProjectCard from "@/components/ProjectCard";
-import { getProjects } from "@/data/projects";
+import ProjectsList from "@/components/ProjectsList";
 
 export const metadata: Metadata = {
   title: "Projects",
   description: "Frontend development projects created by Hamed Razizadeh.",
 };
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
-
+export default function ProjectsPage() {
   return (
     <section className="space-y-8">
       <div className="flex flex-col items-center text-center">
@@ -23,11 +20,7 @@ export default async function ProjectsPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+      <ProjectsList />
     </section>
   );
 }
