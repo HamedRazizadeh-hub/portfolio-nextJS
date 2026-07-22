@@ -17,13 +17,25 @@ type ThemeProviderProps = {
   children: ReactNode;
 };
 
+const THEME_STORAGE_KEY = "theme";
+
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState<boolean>(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+
+    return storedTheme === "dark";
+  });
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
+
+    window.localStorage.setItem(THEME_STORAGE_KEY, dark ? "dark" : "light");
   }, [dark]);
 
   function toggleDark() {
