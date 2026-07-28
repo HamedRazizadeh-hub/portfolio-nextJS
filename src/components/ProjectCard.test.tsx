@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import type { Project } from "@/types/project";
 import ProjectCard from "./ProjectCard";
+import { axe } from "vitest-axe";
 
 const testProject: Project = {
   id: "football-teams-explorer",
@@ -64,5 +65,21 @@ describe("ProjectCard", () => {
     });
 
     expect(likeButton).toBeDisabled();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = render(
+      <ProjectCard project={testProject} onLike={vi.fn()} isLiking={false} />,
+    );
+
+    const results = await axe(container, {
+      rules: {
+        "color-contrast": {
+          enabled: false,
+        },
+      },
+    });
+
+    expect(results).toHaveNoViolations();
   });
 });
