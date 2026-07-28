@@ -3,6 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ProjectCard from "@/components/ProjectCard";
 import type { Project } from "@/types/project";
+import { incrementProjectLikes } from "@/utils/incrementProjectLikes";
 
 type LikeMutationContext = {
   previousProjects: Project[] | undefined;
@@ -49,14 +50,7 @@ export default function ProjectsList() {
       queryClient.setQueryData<Project[]>(
         ["projects"],
         (currentProjects = []) =>
-          currentProjects.map((project) =>
-            project.id === projectId
-              ? {
-                  ...project,
-                  likes: project.likes + 1,
-                }
-              : project,
-          ),
+          incrementProjectLikes(currentProjects, projectId),
       );
 
       return {

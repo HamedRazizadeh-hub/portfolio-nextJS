@@ -1,4 +1,5 @@
 import type { Project } from "@/types/project";
+import { findProjectById } from "@/utils/findProjectById";
 
 export const projects: Project[] = [
   {
@@ -34,5 +35,5 @@ export async function getProjects(): Promise<Project[]> {
 export async function getProjectById(id: string): Promise<Project | undefined> {
   await new Promise((resolve) => setTimeout(resolve, 800));
 
-  return projects.find((project) => project.id === id);
+  return findProjectById(projects, id);
 }
